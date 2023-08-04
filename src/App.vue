@@ -33,18 +33,21 @@ export default {
       data.push({
         id: `${i}`,
         name: `test-${i}`,
+        total: root,
         children: [],
       });
       for (let j = 0; j < children; j++) {
         data[i].children.push({
           id: `${i}-${j}`,
           name: `test-${i}-${j}`,
+          total: 3,
           children: [],
         });
         for (let k = 0; k < base; k++) {
           data[i].children[j].children.push({
             id: `${i}-${j}-${k}`,
             name: `test-${i}-${j}-${k}`,
+            total: 20000,
           });
         }
       }

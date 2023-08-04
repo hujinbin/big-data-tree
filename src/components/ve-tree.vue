@@ -463,6 +463,7 @@ export default {
     });
 
     this.root = this.store.root;
+    console.log(this.root)
 
     let dragState = this.dragState;
 
