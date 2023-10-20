@@ -134,6 +134,7 @@ export default {
           children: "children",
           label: "label",
           disabled: "disabled",
+          total:'total',
         };
       },
     },
