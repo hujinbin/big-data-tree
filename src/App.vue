@@ -25,6 +25,19 @@
     >
     </big-data-tree>
   </div>
+  <div class="ve-tree-flex">
+    <h4>数据分段加载，目录内分页加载</h4>
+    <big-data-tree
+      node-key="id"
+      :props="props"
+      :item-size="26"
+      :load="loadNode"
+      lazy
+      height="calc(100vh - 100px)"
+      show-checkbox
+    >
+    </big-data-tree>
+  </div>
   </div>
 </template>
 
@@ -40,6 +53,8 @@ export default {
       treeData: [],
       lazyTreeData:[],
       treeMap:{},
+      page: 1,
+      pageSize: 100,
     };
   },
   created() {
@@ -109,7 +124,20 @@ export default {
           const children = this.treeMap[node.data.id];
           resolve(children);
         }, 500);
-     }
+     },
+     getData(page){
+      this.page = page;
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              let list = []
+              const end = this.page * this.pageSize
+              const start = end - this.pageSize
+              list = list.slice(start, end);
+              resolve(list)
+            }, 500);
+          })
+            
+        },
   }
 };
 </script>

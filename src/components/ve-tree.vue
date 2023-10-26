@@ -72,7 +72,6 @@ export default {
   name: "BigDataTree",
 
   components: {
-    // VirtualList,
     RecycleScroller,
     ElTreeNode,
     ElTreeVirtualNode,
@@ -464,7 +463,6 @@ export default {
     });
 
     this.root = this.store.root;
-    console.log(this.root)
 
     let dragState = this.dragState;
 
@@ -655,6 +653,10 @@ export default {
       dragState.dropNode = null;
       dragState.allowDrop = true;
     });
+    console.log(this.dataList)
+    setInterval(()=>{
+      console.log(this.dataList)
+    },5000)
   },
 
   mounted() {
