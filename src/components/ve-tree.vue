@@ -653,10 +653,6 @@ export default {
       dragState.dropNode = null;
       dragState.allowDrop = true;
     });
-    console.log(this.dataList)
-    setInterval(()=>{
-      console.log(this.dataList)
-    },5000)
   },
 
   mounted() {

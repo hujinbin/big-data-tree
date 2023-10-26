@@ -108,14 +108,12 @@ export default {
       }
       this.treeMap[`${i}`] = level2
     }
-    console.log(lazyData)
     this.treeData = data;
     this.lazyTreeData = lazyData;
   },
   methods:{
     // 模拟数据请求
     loadNode(node, resolve) {
-        console.log(node)
         if (node.level === 0) {
           return resolve(this.lazyTreeData);
         }

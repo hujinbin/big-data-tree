@@ -87,9 +87,12 @@ export default class Node {
         this.loaded = false;
         this.childNodes = [];
         this.loading = false;
-
+          
         if (this.parent) {
             this.level = this.parent.level + 1;
+        }
+        if(this.data && this.data.total){
+            this.total = this.data.total;
         }
 
         const store = this.store;
