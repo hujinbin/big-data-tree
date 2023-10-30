@@ -8,6 +8,7 @@
       'is-drop-inner': dragState.dropType === 'inner',
     }"
     role="tree"
+    ref="loadMoreTree"
   >
     <RecycleScroller
       v-if="height && !isEmpty"
@@ -67,6 +68,7 @@ import ElTreeNode from "./tree-node.vue";
 import ElTreeVirtualNode from "./virtual-tree-node.vue";
 import emitter from "./mixins/emitter";
 import { addClass, removeClass } from "./utils/dom";
+import debounce from 'lodash/debounce';
 
 export default {
   name: "BigDataTree",
@@ -441,6 +443,17 @@ export default {
         hasInput.click();
       }
     },
+    // 滚动分页
+    insideViewportCb([entry]) {
+      console.log(222222)
+      console.log(entry)
+      console.log(entry.target)
+      const node = entry.target
+      if (entry && entry.isIntersecting) {
+        this.showLoading = true;
+        this.$emit('load-more');
+      }
+    },
   },
 
   created() {
@@ -658,6 +671,18 @@ export default {
   mounted() {
     this.initTabIndex();
     this.$el.addEventListener("keydown", this.handleKeydown);
+    // 滚动加载方法
+    this.observer = new IntersectionObserver(
+                debounce(this.insideViewportCb, 50)
+        );
+    // 滚动加载方法
+    this.timer = setTimeout(() => {
+      const lazyImages = document.querySelectorAll('.el-tree-big-data-node');
+lazyImages.forEach((node) => {
+  this.observer.observe(node); // 开始观察每个元素位置
+});     
+              
+          }, 20);
   },
 
   updated() {

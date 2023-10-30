@@ -2,7 +2,7 @@
   <div
     v-show="node.visible"
     ref="node"
-    class="el-tree-node"
+    class="el-tree-node el-tree-big-data-node"
     :class="{
       'is-expanded': expanded,
       'is-current': node.isCurrent,
@@ -12,6 +12,7 @@
     }"
     role="treeitem"
     tabindex="-1"
+    :data-node="node"
     :aria-expanded="expanded"
     :aria-disabled="node.disabled"
     :aria-checked="node.checked"
