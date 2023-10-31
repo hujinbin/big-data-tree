@@ -9,8 +9,8 @@ module.exports = {
     mode: NODE_ENV,
     entry: NODE_ENV === 'development' ? './src/main.js' : './src/index.js',
     output: {
-        path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
+        path: path.resolve(__dirname, './lib'),
+        publicPath: '/lib/',
         filename: 'big-data-tree.min.js',
         library: 'big-data-tree',
         libraryTarget: 'umd',
