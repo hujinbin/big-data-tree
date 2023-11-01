@@ -62,7 +62,7 @@ export default {
       lazyData = [],
       root = 8,
       children = 3,
-      base = 1000;
+      base = 10000;
     for (let i = 0; i < root; i++) {
       data.push({
         id: `${i}`,

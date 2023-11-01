@@ -3,6 +3,7 @@ var webpack = require('webpack')
 const NODE_ENV = process.env.NODE_ENV
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     // entry: './src/main.js',
@@ -39,7 +40,8 @@ module.exports = {
             }, {
                 test: /\.scss$/,
                 use: [
-                    'vue-style-loader',
+                    MiniCssExtractPlugin.loader,
+                    // 'vue-style-loader',
                     'css-loader',
                     'sass-loader'
                 ],
@@ -47,7 +49,9 @@ module.exports = {
             {
                 test: /\.sass$/,
                 use: [
-                    'vue-style-loader',
+                    MiniCssExtractPlugin.loader,
+                    // 'style-loader',
+                    // 'vue-style-loader',
                     'css-loader',
                     'sass-loader?indentedSyntax'
                 ],
@@ -61,11 +65,13 @@ module.exports = {
                         // the "scss" and "sass" values for the lang attribute to the right configs here.
                         // other preprocessors should work out of the box, no loader config like this necessary.
                         'scss': [
+                            // 'style-loader',
                             'vue-style-loader',
                             'css-loader',
                             'sass-loader'
                         ],
                         'sass': [
+                            // 'style-loader',
                             'vue-style-loader',
                             'css-loader',
                             'sass-loader?indentedSyntax'
@@ -120,12 +126,11 @@ if (process.env.NODE_ENV === 'production') {
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true
-        })
+        }),
+        new MiniCssExtractPlugin({
+            filename: "big-data-tree.min.css"
+        }),
     ])
 } else {
     module.exports.devtool = '#source-map'
-}
-
-function resolve(dir) {
-    return path.join(__dirname, '..', dir)
 }
