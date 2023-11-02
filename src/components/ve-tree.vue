@@ -445,9 +445,9 @@ export default {
     },
     // 滚动分页
     insideViewportCb([entry]) {
-      console.log(222222)
-      console.log(entry)
-      console.log(entry.target)
+      //console.log(222222)
+      //console.log(entry)
+      //console.log(entry.target)
       const node = entry.target
       if (entry && entry.isIntersecting) {
         this.showLoading = true;

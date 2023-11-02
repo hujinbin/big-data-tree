@@ -26,7 +26,8 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     'vue-style-loader',
-                    'css-loader'
+                    'css-loader',
+                    'postcss-loader'
                 ],
             },
             {
@@ -34,7 +35,9 @@ module.exports = {
                 use: [{
                     loader: "file-loader",
                     options: {
-                        outputPath: 'fonts'
+                        outputPath: 'fonts',
+                        publicPath: './fonts', 
+                        name: '[name].[ext]',
                     }
                 }]
             }, {
@@ -43,7 +46,8 @@ module.exports = {
                     MiniCssExtractPlugin.loader,
                     // 'vue-style-loader',
                     'css-loader',
-                    'sass-loader'
+                    'sass-loader',
+                    'postcss-loader'
                 ],
             },
             {
@@ -53,7 +57,8 @@ module.exports = {
                     // 'style-loader',
                     // 'vue-style-loader',
                     'css-loader',
-                    'sass-loader?indentedSyntax'
+                    'sass-loader?indentedSyntax',
+                    'postcss-loader'
                 ],
             },
             {
@@ -68,13 +73,15 @@ module.exports = {
                             // 'style-loader',
                             'vue-style-loader',
                             'css-loader',
-                            'sass-loader'
+                            'sass-loader',
+                            'postcss-loader'
                         ],
                         'sass': [
                             // 'style-loader',
                             'vue-style-loader',
                             'css-loader',
-                            'sass-loader?indentedSyntax'
+                            'sass-loader?indentedSyntax',
+                            'postcss-loader'
                         ]
                     }
                     // other vue-loader options go here
