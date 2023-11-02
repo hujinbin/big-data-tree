@@ -1,5 +1,3 @@
-import "./assets/index.scss"
-
 import BigDataTree from "./components/ve-tree.vue";
 
 BigDataTree.install = function(Vue) {

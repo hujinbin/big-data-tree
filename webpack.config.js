@@ -25,7 +25,8 @@ module.exports = {
         rules: [{
                 test: /\.css$/,
                 use: [
-                    'vue-style-loader',
+                    MiniCssExtractPlugin.loader,
+                    // 'vue-style-loader',
                     'css-loader',
                     'postcss-loader'
                 ],
@@ -36,7 +37,6 @@ module.exports = {
                     loader: "file-loader",
                     options: {
                         outputPath: 'fonts',
-                        publicPath: './fonts', 
                         name: '[name].[ext]',
                     }
                 }]
@@ -70,15 +70,17 @@ module.exports = {
                         // the "scss" and "sass" values for the lang attribute to the right configs here.
                         // other preprocessors should work out of the box, no loader config like this necessary.
                         'scss': [
+                            MiniCssExtractPlugin.loader,
                             // 'style-loader',
-                            'vue-style-loader',
+                            // 'vue-style-loader',
                             'css-loader',
                             'sass-loader',
                             'postcss-loader'
                         ],
                         'sass': [
+                            MiniCssExtractPlugin.loader,
                             // 'style-loader',
-                            'vue-style-loader',
+                            // 'vue-style-loader',
                             'css-loader',
                             'sass-loader?indentedSyntax',
                             'postcss-loader'
