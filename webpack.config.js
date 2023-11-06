@@ -28,7 +28,6 @@ module.exports = {
                     MiniCssExtractPlugin.loader,
                     // 'vue-style-loader',
                     'css-loader',
-                    'postcss-loader'
                 ],
             },
             {
@@ -47,7 +46,6 @@ module.exports = {
                     // 'vue-style-loader',
                     'css-loader',
                     'sass-loader',
-                    'postcss-loader'
                 ],
             },
             {
@@ -58,7 +56,6 @@ module.exports = {
                     // 'vue-style-loader',
                     'css-loader',
                     'sass-loader?indentedSyntax',
-                    'postcss-loader'
                 ],
             },
             {
@@ -75,7 +72,6 @@ module.exports = {
                             // 'vue-style-loader',
                             'css-loader',
                             'sass-loader',
-                            'postcss-loader'
                         ],
                         'sass': [
                             MiniCssExtractPlugin.loader,
@@ -83,7 +79,6 @@ module.exports = {
                             // 'vue-style-loader',
                             'css-loader',
                             'sass-loader?indentedSyntax',
-                            'postcss-loader'
                         ]
                     }
                     // other vue-loader options go here
