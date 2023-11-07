@@ -3,7 +3,6 @@ var webpack = require('webpack')
 const NODE_ENV = process.env.NODE_ENV
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     // entry: './src/main.js',
@@ -25,8 +24,7 @@ module.exports = {
         rules: [{
                 test: /\.css$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
-                    // 'vue-style-loader',
+                    'vue-style-loader',
                     'css-loader',
                 ],
             },
@@ -42,8 +40,7 @@ module.exports = {
             }, {
                 test: /\.scss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
-                    // 'vue-style-loader',
+                    'vue-style-loader',
                     'css-loader',
                     'sass-loader',
                 ],
@@ -51,9 +48,7 @@ module.exports = {
             {
                 test: /\.sass$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
-                    // 'style-loader',
-                    // 'vue-style-loader',
+                    'vue-style-loader',
                     'css-loader',
                     'sass-loader?indentedSyntax',
                 ],
@@ -67,16 +62,12 @@ module.exports = {
                         // the "scss" and "sass" values for the lang attribute to the right configs here.
                         // other preprocessors should work out of the box, no loader config like this necessary.
                         'scss': [
-                            MiniCssExtractPlugin.loader,
-                            // 'style-loader',
-                            // 'vue-style-loader',
+                            'vue-style-loader',
                             'css-loader',
                             'sass-loader',
                         ],
                         'sass': [
-                            MiniCssExtractPlugin.loader,
-                            // 'style-loader',
-                            // 'vue-style-loader',
+                            'vue-style-loader',
                             'css-loader',
                             'sass-loader?indentedSyntax',
                         ]
