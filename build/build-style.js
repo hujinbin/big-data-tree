@@ -3,8 +3,6 @@ const sass = require('gulp-sass')(require('sass'));
 const cssmin = require('gulp-cssmin');
 const autoprefixer = require('gulp-autoprefixer');
 
-sass.compiler = require('node-sass');
-
 function compile() {
   return src(['../src/assets/index.scss'])
     .pipe(sass().on('error', sass.logError))

@@ -24,6 +24,7 @@ module.exports = {
         rules: [{
                 test: /\.css$/,
                 use: [
+                    'style-loader',
                     'vue-style-loader',
                     'css-loader',
                 ],
@@ -40,6 +41,7 @@ module.exports = {
             }, {
                 test: /\.scss$/,
                 use: [
+                    'style-loader',
                     'vue-style-loader',
                     'css-loader',
                     'sass-loader',
@@ -48,6 +50,7 @@ module.exports = {
             {
                 test: /\.sass$/,
                 use: [
+                    'style-loader',
                     'vue-style-loader',
                     'css-loader',
                     'sass-loader?indentedSyntax',
@@ -62,11 +65,13 @@ module.exports = {
                         // the "scss" and "sass" values for the lang attribute to the right configs here.
                         // other preprocessors should work out of the box, no loader config like this necessary.
                         'scss': [
+                            'style-loader',
                             'vue-style-loader',
                             'css-loader',
                             'sass-loader',
                         ],
                         'sass': [
+                            'style-loader',
                             'vue-style-loader',
                             'css-loader',
                             'sass-loader?indentedSyntax',
@@ -121,9 +126,6 @@ if (process.env.NODE_ENV === 'production') {
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true
-        }),
-        new MiniCssExtractPlugin({
-            filename: "big-data-tree.min.css"
         }),
     ])
 } else {
