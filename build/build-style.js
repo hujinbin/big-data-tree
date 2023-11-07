@@ -1,13 +1,13 @@
 const { series, src, dest } = require('gulp');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const cssmin = require('gulp-cssmin');
 const autoprefixer = require('gulp-autoprefixer');
 
 sass.compiler = require('node-sass');
 
 function compile() {
-  return src(['../src/styles/index.scss'])
-    .pipe(sass.sync())
+  return src(['../src/assets/index.scss'])
+    .pipe(sass().on('error', sass.logError))
     .pipe(
       autoprefixer({
         overrideBrowserslist: ['ie > 9', 'last 2 versions'],
@@ -15,18 +15,13 @@ function compile() {
       })
     )
     .pipe(cssmin())
-    .pipe(dest('../lib/styles'));
+    .pipe(dest('../lib'));
 }
 
 function copyfont() {
-  return src('../src/styles/fonts/**')
+  return src('../src/assets/fonts/**')
     .pipe(cssmin())
-    .pipe(dest('../lib/styles/fonts'));
+    .pipe(dest('../lib/fonts'));
 }
 
-function copyImg() {
-  return src('../src/styles/img/**')
-    .pipe(dest('../lib/styles/img'));
-}
-
-exports.build = series(compile, copyfont, copyImg);
+exports.build = series(compile, copyfont);
