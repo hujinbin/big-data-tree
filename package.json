@@ -1,6 +1,6 @@
 {
   "name": "big-data-tree",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "./lib/big-data-tree.min.js",
   "scripts": {
