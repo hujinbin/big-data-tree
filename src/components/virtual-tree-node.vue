@@ -24,13 +24,9 @@
     @dragend.stop="handleDragEnd"
     @drop.stop="handleDrop"
   >
-    <div class="el-tree-node__content" :style="`height: ${itemSize}px;`">
-      <span
-        aria-hidden="true"
-        :style="{
-          'min-width': (node.level - 1) * tree.indent + 'px',
-        }"
-      ></span>
+    <div class="el-tree-node__content" :style="`padding-left:${
+        (node.level - 1) * tree.indent
+      }px;height: ${itemSize}px;`">
       <span
         :class="[
           {
