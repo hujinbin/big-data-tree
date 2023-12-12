@@ -19,6 +19,8 @@
       }"
       key-field="key"
       :items="dataList"
+      @update="updateScroll"
+      :emitUpdate="true"
       :item-size="itemSize"
       :buffer="50"
     >
@@ -164,6 +166,10 @@ export default {
       type: Number,
       default: 40,
     }, // 计算希望渲染的tree节点数
+    pageSize: {
+      type: Number,
+      default: 1000, // 分页pagesize，只在分页加载(lazy = true)情况下生效
+    }
   },
 
   data() {
@@ -180,6 +186,8 @@ export default {
         allowDrop: true,
       },
       treeNodeName: this.height ? "ElTreeVirtualNode" : "ElTreeNode",
+      startIndex: 0,
+      endIndex: 0,
     };
   },
 
@@ -452,6 +460,20 @@ export default {
       if (entry && entry.isIntersecting) {
         this.showLoading = true;
         this.$emit('load-more');
+      }
+    },
+    // 滚动事件
+    updateScroll(startIndex, endIndex){
+      console.log(startIndex, endIndex)
+      let offset = parseInt(this.pageSize/ 2)
+      if(endIndex-this.startIndex > offset){
+        this.startIndex = endIndex;
+        // this.store.getNode()
+        const page = endIndex % this.pageSize
+        if(page > 1){
+          // 增加定时任务
+        }
+        console.log(page)
       }
     },
   },
