@@ -12,7 +12,6 @@
     }"
     role="treeitem"
     tabindex="-1"
-    :data-node="node"
     :aria-expanded="expanded"
     :aria-disabled="node.disabled"
     :aria-checked="node.checked"

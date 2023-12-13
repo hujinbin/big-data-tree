@@ -16,6 +16,7 @@
     <h4>数据分段加载</h4>
     <big-data-tree
       node-key="id"
+      :data="lazyTreeData"
       :props="props"
       :item-size="26"
       :load="loadNode"
@@ -29,6 +30,7 @@
     <h4>数据分段加载，目录内分页加载</h4>
     <big-data-tree
       node-key="id"
+      :data="lazyTreeData"
       :props="props"
       :item-size="26"
       :load="loadNode"

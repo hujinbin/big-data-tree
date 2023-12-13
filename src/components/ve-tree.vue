@@ -186,8 +186,8 @@ export default {
         allowDrop: true,
       },
       treeNodeName: this.height ? "ElTreeVirtualNode" : "ElTreeNode",
-      startIndex: 0,
-      endIndex: 0,
+      startIndex: 0, // 滚动的起始节点
+      endIndex: 0, // 向下滚动的结束节点
     };
   },
 
@@ -498,6 +498,8 @@ export default {
     });
 
     this.root = this.store.root;
+    console.log(this.store)
+    console.log(this.data)
 
     let dragState = this.dragState;
 

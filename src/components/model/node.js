@@ -74,6 +74,9 @@ export default class Node {
         this.visible = true;
         this.isCurrent = false;
         this.type = null
+        this.total  = 0; // 目录下的总数 
+        this.pageSize = 0; // 分页页码
+        this.page = 0;  // page数量
 
         for (let name in options) {
             // eslint-disable-next-line no-prototype-builtins
