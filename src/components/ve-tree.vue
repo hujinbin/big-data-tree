@@ -8,9 +8,9 @@
       'is-drop-inner': dragState.dropType === 'inner',
     }"
     role="tree"
-    ref="loadMoreTree"
   >
     <RecycleScroller
+      ref="loadMoreTree"
       v-if="height && !isEmpty"
       :style="{
         height: height,
@@ -464,16 +464,24 @@ export default {
     },
     // 滚动事件
     updateScroll(startIndex, endIndex){
-      console.log(startIndex, endIndex)
       let offset = parseInt(this.pageSize/ 2)
-      if(endIndex-this.startIndex > offset){
+      const scrollNum = endIndex - this.startIndex // 滚动的节点数量
+      if(scrollNum > offset){
+        console.log('触发')
         this.startIndex = endIndex;
-        // this.store.getNode()
-        const page = endIndex % this.pageSize
-        if(page > 1){
-          // 增加定时任务
+        const node = this.store.getPageChangeNode()
+        if(node){
+          node.page = node.page + 1;
+          node.loaded = false;
+          node.expand();
         }
-        console.log(page)
+        if(scrollNum > this.pageSize){
+          const page = scrollNum % this.pageSize
+          if(page > 1){
+          // 增加定时任务
+            console.log(page)
+          }
+        }
       }
     },
   },

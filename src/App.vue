@@ -1,6 +1,6 @@
 <template>
-  <div class="ve-tree">
-    <div class="ve-tree-flex">
+   <div class="ve-tree">
+  <!-- <div class="ve-tree-flex">
     <h4>数据全量加载</h4>
     <big-data-tree
       node-key="id"
@@ -25,7 +25,7 @@
       show-checkbox
     >
     </big-data-tree>
-  </div>
+  </div> -->
   <div class="ve-tree-flex">
     <h4>数据分段加载，目录内分页加载</h4>
     <big-data-tree
@@ -33,7 +33,8 @@
       :data="lazyTreeData"
       :props="props"
       :item-size="26"
-      :load="loadNode"
+      :load="getData"
+      :pageSize="100"
       lazy
       height="calc(100vh - 100px)"
       show-checkbox
@@ -125,18 +126,22 @@ export default {
           resolve(children);
         }, 500);
      },
-     getData(page){
-      this.page = page;
-          return new Promise((resolve, reject) => {
+    //  分页懒加载
+     getData(node, resolve){
+          console.log(node)
+          if (node.level === 0) {
+              return resolve(this.lazyTreeData);
+          }
+          this.page = node.page || 1;
             setTimeout(() => {
-              let list = []
+              let list = this.treeMap[node.data.id]
               const end = this.page * this.pageSize
               const start = end - this.pageSize
               list = list.slice(start, end);
-              resolve(list)
+              const result = [...node.childNodes,...list]
+              node.offset = result.length;
+              resolve(result)
             }, 500);
-          })
-            
         },
   }
 };

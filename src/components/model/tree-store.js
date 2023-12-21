@@ -366,4 +366,30 @@ export default class TreeStore {
             this.setCurrentNode(node);
         }
     }
+    // 获取当前需要分页的节点数据
+    getPageChangeNode(){
+        const nodesMap = this.nodesMap;
+        let nodeList = [];
+        for (let nodeKey in nodesMap) {
+            const node = nodesMap[nodeKey]
+            const childNodesLen = node.childNodes.length
+            const offset = node.offset === 0 ? childNodesLen : node.offset;
+            console.log('offset==========')
+            console.log(offset)
+            // eslint-disable-next-line no-prototype-builtins
+            if (node.expanded && offset < node.total) {
+                nodeList.push(node);
+            }
+        }
+        console.log(nodeList)
+        if(nodeList.length === 0){
+            return null
+        }
+        if(nodeList.length === 1){
+            return nodeList[0]
+        }
+        if(nodeList.length > 1){
+            return nodeList[0]
+        }
+    }
 }
