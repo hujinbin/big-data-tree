@@ -71,6 +71,7 @@ import ElTreeVirtualNode from "./virtual-tree-node.vue";
 import emitter from "./mixins/emitter";
 import { addClass, removeClass } from "./utils/dom";
 import debounce from 'lodash/debounce';
+import LimitResquest from './utils/limitResquest.js';
 
 export default {
   name: "BigDataTree",
@@ -187,7 +188,7 @@ export default {
       },
       treeNodeName: this.height ? "ElTreeVirtualNode" : "ElTreeNode",
       startIndex: 0, // 滚动的起始节点
-      endIndex: 0, // 向下滚动的结束节点
+      limitResquest: null, // 分页请求并发器
     };
   },
 
@@ -466,27 +467,52 @@ export default {
     updateScroll(startIndex, endIndex){
       let offset = parseInt(this.pageSize/ 2)
       const scrollNum = endIndex - this.startIndex // 滚动的节点数量
-      if(scrollNum > offset){
+      console.log(this.startIndex)
+      console.log(scrollNum)
+      if(scrollNum < 0){
+         this.startIndex = endIndex;
+      }else if(scrollNum > offset){
         console.log('触发')
         this.startIndex = endIndex;
-        const node = this.store.getPageChangeNode()
-        if(node){
-          node.page = node.page + 1;
-          node.loaded = false;
-          node.expand();
-        }
-        if(scrollNum > this.pageSize){
+        if(scrollNum > (this.pageSize * 1.5)){
           const page = scrollNum % this.pageSize
+          console.log(page)
           if(page > 1){
           // 增加定时任务
-            console.log(page)
+            console.log('page ============ 大于',page)
+            for(let n in page){
+               console.log('n==========================',n)
+               this.limitResquest.request(() => this.onPageTurn());
+            }
           }
+        }else{
+          this.onPageTurn();
         }
       }
+    },
+    // 分页方法
+    onPageTurn(){
+      return new Promise(async (resolve, reject) => {
+          const node = this.store.getPageChangeNode()
+          if(node){
+            node.page = node.page + 1;
+            const nodeResolve = (children) => {
+              node.childNodes = [];
+              node.doCreateChildren(children);
+              node.updateLeafState();
+            };
+            await this.store.load(node, nodeResolve);
+            resolve();
+          }else{
+             resolve();
+          }
+      })
     },
   },
 
   created() {
+    this.limitResquest = new LimitResquest();
+
     this.isTree = true;
 
     this.store = new TreeStore({
@@ -506,8 +532,6 @@ export default {
     });
 
     this.root = this.store.root;
-    console.log(this.store)
-    console.log(this.data)
 
     let dragState = this.dragState;
 
@@ -720,6 +744,9 @@ lazyImages.forEach((node) => {
   updated() {
     this.treeItems = this.$el.querySelectorAll("[role=treeitem]");
     this.checkboxItems = this.$el.querySelectorAll("input[type=checkbox]");
+  },
+  destroyed(){
+    if (this.limitResquest) this.limitResquest.clear();
   },
 };
 </script>
