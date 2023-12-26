@@ -34,7 +34,7 @@
       :props="props"
       :item-size="26"
       :load="getData"
-      :pageSize="100"
+      :pageSize="1000"
       lazy
       height="calc(100vh - 100px)"
       show-checkbox
@@ -56,8 +56,7 @@ export default {
       treeData: [],
       lazyTreeData:[],
       treeMap:{},
-      page: 1,
-      pageSize: 100,
+      pageSize: 1000,
     };
   },
   created() {
@@ -132,14 +131,17 @@ export default {
           if (node.level === 0) {
               return resolve(this.lazyTreeData);
           }
-          this.page = node.page || 1;
+          const page = node.page || 1;
+          console.log(page)
             setTimeout(() => {
               let list = this.treeMap[node.data.id]
-              const end = this.page * this.pageSize
+              const end = page * this.pageSize
               const start = end - this.pageSize
               list = list.slice(start, end);
-              const result = [...node.childNodes,...list]
+              const childNodes = node.childNodes.map(item=>item.data);
+              const result = [...childNodes,...list]
               node.offset = result.length;
+              console.log(result)
               resolve(result)
             }, 500);
         },

@@ -374,8 +374,6 @@ export default class TreeStore {
             const node = nodesMap[nodeKey]
             const childNodesLen = node.childNodes.length
             const offset = node.offset === 0 ? childNodesLen : node.offset;
-            console.log('offset==========')
-            console.log(offset)
             // eslint-disable-next-line no-prototype-builtins
             if (node.expanded && offset < node.total) {
                 nodeList.push(node);

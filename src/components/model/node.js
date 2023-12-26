@@ -76,7 +76,7 @@ export default class Node {
         this.type = null
         this.total  = 0; // 目录下的总数 
         this.pageSize = 0; // 分页页码
-        this.page = 0;  // page数量
+        this.page = 1;  // page数量
         this.offset = 0 // 目录下的实际条数，可不用，会二次校验，主要用于过滤目录节点的数量
 
         for (let name in options) {
