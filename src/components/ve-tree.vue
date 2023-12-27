@@ -10,7 +10,7 @@
     role="tree"
   >
     <RecycleScroller
-      ref="loadMoreTree"
+      ref="virtualScroller"
       v-if="height && !isEmpty"
       :style="{
         height: height,
@@ -70,7 +70,6 @@ import ElTreeNode from "./tree-node.vue";
 import ElTreeVirtualNode from "./virtual-tree-node.vue";
 import emitter from "./mixins/emitter";
 import { addClass, removeClass } from "./utils/dom";
-import debounce from 'lodash/debounce';
 import LimitResquest from './utils/limitResquest.js';
 
 export default {
@@ -452,30 +451,18 @@ export default {
         hasInput.click();
       }
     },
-    // 滚动分页
-    insideViewportCb([entry]) {
-      //console.log(222222)
-      //console.log(entry)
-      //console.log(entry.target)
-      const node = entry.target
-      if (entry && entry.isIntersecting) {
-        this.showLoading = true;
-        this.$emit('load-more');
-      }
-    },
     // 滚动事件
     updateScroll(startIndex, endIndex){
       let offset = parseInt(this.pageSize/ 2)
       const scrollNum = endIndex - this.startIndex // 滚动的节点数量
-      console.log(this.startIndex)
-      console.log(scrollNum)
       if(scrollNum < 0){
          this.startIndex = endIndex;
       }else if(scrollNum > offset){
-        console.log('触发')
+        this.$emit('treeLoadMore') // 整体树的滚动加载事件
         this.startIndex = endIndex;
         if(scrollNum > (this.pageSize * 1.5)){
-          const page = scrollNum % this.pageSize
+          console.log(111111111111)
+          const page = parseInt(scrollNum / this.pageSize)
           console.log(page)
           if(page > 1){
           // 增加定时任务
@@ -492,21 +479,27 @@ export default {
     },
     // 分页方法
     onPageTurn(){
-      return new Promise(async (resolve, reject) => {
-          const node = this.store.getPageChangeNode()
-          if(node){
+      return new Promise((resolve, reject) => {
+          let node = this.store.getPageChangeNode()
+          if(node === true){
+            console.log(this.root.childNodes)
+
+          }else if(node){
             node.page = node.page + 1;
             const nodeResolve = (children) => {
               node.childNodes = [];
               node.doCreateChildren(children);
               node.updateLeafState();
+              resolve();
             };
-            await this.store.load(node, nodeResolve);
-            resolve();
+            this.store.load(node, nodeResolve);
           }else{
              resolve();
           }
       })
+    },
+    deepFindNode(){
+
     },
   },
 
@@ -727,18 +720,6 @@ export default {
   mounted() {
     this.initTabIndex();
     this.$el.addEventListener("keydown", this.handleKeydown);
-    // 滚动加载方法
-    this.observer = new IntersectionObserver(
-                debounce(this.insideViewportCb, 50)
-        );
-    // 滚动加载方法
-    this.timer = setTimeout(() => {
-      const lazyImages = document.querySelectorAll('.el-tree-big-data-node');
-lazyImages.forEach((node) => {
-  this.observer.observe(node); // 开始观察每个元素位置
-});     
-              
-          }, 20);
   },
 
   updated() {

@@ -379,7 +379,8 @@ export default class TreeStore {
                 nodeList.push(node);
             }
         }
-        console.log(nodeList)
+        console.log(this.childNodes)
+        // console.log(nodeList)
         if(nodeList.length === 0){
             return null
         }
@@ -387,7 +388,7 @@ export default class TreeStore {
             return nodeList[0]
         }
         if(nodeList.length > 1){
-            return nodeList[0]
+            return true
         }
     }
 }

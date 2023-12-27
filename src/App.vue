@@ -132,16 +132,12 @@ export default {
               return resolve(this.lazyTreeData);
           }
           const page = node.page || 1;
-          console.log("page============",page)
+          console.log("getData . page============",page)
             setTimeout(() => {
               let list = this.treeMap[node.data.id]
               const end = page * this.pageSize
               const start = end - this.pageSize
-              console.log(this.pageSize)
-                console.log(start)
-                console.log(end)
               list = list.slice(start, end);
-              console.log(list)
               const childNodes = node.childNodes.map(item=>item.data);
               const result = [...childNodes,...list]
               node.offset = result.length;
