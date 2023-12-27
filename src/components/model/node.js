@@ -66,6 +66,7 @@ export default class Node {
     constructor(options) {
         this.id = nodeIdSeed++;
         this.text = null;
+        this.allChecked = false; // 分页状态下，判断是否全选
         this.checked = false;
         this.indeterminate = false;
         this.data = null;
@@ -335,7 +336,9 @@ export default class Node {
 
         if (this.shouldLoadData()) {
             this.loadData((data) => {
+                console.log(data);
                 if (data instanceof Array) {
+                    console.log(this)
                     if (this.checked) {
                         this.setChecked(true, true);
                     } else if (!this.store.checkStrictly) {
@@ -434,7 +437,9 @@ export default class Node {
                 handleDescendants();
             }
         }
-
+        if(!this.isLeaf){
+            this.allChecked = this.checked;
+        }
         const parent = this.parent;
         if (!parent || parent.level === 0) return;
 

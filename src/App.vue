@@ -142,7 +142,7 @@ export default {
               const result = [...childNodes,...list]
               node.offset = result.length;
               console.log(result)
-              resolve(result)
+              resolve(list)
             }, 500);
         },
   }

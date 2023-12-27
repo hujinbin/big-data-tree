@@ -483,13 +483,15 @@ export default {
           let node = this.store.getPageChangeNode()
           if(node === true){
             console.log(this.root.childNodes)
-
+            this.deepFindNode(this.root.childNodes);
           }else if(node){
             node.page = node.page + 1;
             const nodeResolve = (children) => {
-              node.childNodes = [];
               node.doCreateChildren(children);
               node.updateLeafState();
+              if (node.checked || node.allChecked) {
+                  node.setChecked(true, true);
+              }
               resolve();
             };
             this.store.load(node, nodeResolve);
@@ -498,8 +500,17 @@ export default {
           }
       })
     },
-    deepFindNode(){
-
+    deepFindNode(nodes){
+      for(let node in nodes){
+          const childNodesLen = node.childNodes.length
+          const offset = node.offset === 0 ? childNodesLen : node.offset;
+            // eslint-disable-next-line no-prototype-builtins
+          if (node.expanded && offset < node.total) {
+            nodeList.push(node);
+          }
+          const list = node.childNodes.filter(item=>item.isLeaf);
+          this.deepFindNode(list)
+      }
     },
   },
 
