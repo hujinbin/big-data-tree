@@ -127,7 +127,7 @@ export default {
      },
     //  分页懒加载
      getData(node, resolve){
-          console.log(node)
+          console.log(node.data.name)
           if (node.level === 0) {
               return resolve(this.lazyTreeData);
           }
@@ -141,7 +141,6 @@ export default {
               const childNodes = node.childNodes.map(item=>item.data);
               const result = [...childNodes,...list]
               node.offset = result.length;
-              console.log(result)
               resolve(list)
             }, 500);
         },

@@ -188,6 +188,7 @@ export default {
       treeNodeName: this.height ? "ElTreeVirtualNode" : "ElTreeNode",
       startIndex: 0, // 滚动的起始节点
       limitResquest: null, // 分页请求并发器
+      loadMoreNodes: [],
     };
   },
 
@@ -461,15 +462,13 @@ export default {
         this.$emit('treeLoadMore') // 整体树的滚动加载事件
         this.startIndex = endIndex;
         if(scrollNum > (this.pageSize * 1.5)){
-          console.log(111111111111)
-          const page = parseInt(scrollNum / this.pageSize)
-          console.log(page)
+          let page = parseInt(scrollNum / this.pageSize)
           if(page > 1){
           // 增加定时任务
-            console.log('page ============ 大于',page)
-            for(let n in page){
-               console.log('n==========================',n)
-               this.limitResquest.request(() => this.onPageTurn());
+            let i = 0;
+            while (i < page) {
+              this.limitResquest.request(() => this.onPageTurn());
+              i++;
             }
           }
         }else{
@@ -480,37 +479,43 @@ export default {
     // 分页方法
     onPageTurn(){
       return new Promise((resolve, reject) => {
-          let node = this.store.getPageChangeNode()
-          if(node === true){
-            console.log(this.root.childNodes)
-            this.deepFindNode(this.root.childNodes);
-          }else if(node){
-            node.page = node.page + 1;
-            const nodeResolve = (children) => {
+          const nodeResolve = (children) => {
               node.doCreateChildren(children);
               node.updateLeafState();
               if (node.checked || node.allChecked) {
                   node.setChecked(true, true);
               }
               resolve();
-            };
+          };
+          let node = this.store.getPageChangeNode()
+          if(node === true){
+            this.loadMoreNodes = [];
+            this.deepFindNode(this.root.childNodes);
+            if(this.loadMoreNodes.length>0){
+              node = this.loadMoreNodes[0]
+            }
+          }
+          if(node){
+            node.page = node.page + 1;
             this.store.load(node, nodeResolve);
           }else{
              resolve();
           }
       })
     },
-    deepFindNode(nodes){
-      for(let node in nodes){
-          const childNodesLen = node.childNodes.length
-          const offset = node.offset === 0 ? childNodesLen : node.offset;
+    deepFindNode(nodes =[]){
+      nodes.forEach((node)=>{
+          if(node && node.childNodes){
+              const childNodesLen = node.childNodes.length
+              const offset = node.offset === 0 ? childNodesLen : node.offset;
             // eslint-disable-next-line no-prototype-builtins
-          if (node.expanded && offset < node.total) {
-            nodeList.push(node);
+              if (node.expanded && offset < node.total) {
+                  this.loadMoreNodes.push(node);
+              }
+              const list = node.childNodes.filter(item=>!item.isLeaf);
+              this.deepFindNode(list)
           }
-          const list = node.childNodes.filter(item=>item.isLeaf);
-          this.deepFindNode(list)
-      }
+      })
     },
   },
 

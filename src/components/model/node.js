@@ -336,9 +336,7 @@ export default class Node {
 
         if (this.shouldLoadData()) {
             this.loadData((data) => {
-                console.log(data);
                 if (data instanceof Array) {
-                    console.log(this)
                     if (this.checked) {
                         this.setChecked(true, true);
                     } else if (!this.store.checkStrictly) {
