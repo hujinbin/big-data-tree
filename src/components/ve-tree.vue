@@ -472,7 +472,7 @@ export default {
             }
           }
         }else{
-          this.onPageTurn();
+          this.limitResquest.request(() => this.onPageTurn());
         }
       }
     },
