@@ -485,6 +485,7 @@ export default {
               if (node.checked || node.allChecked) {
                   node.setChecked(true, true);
               }
+              node.isloadMore = false;
               resolve();
           };
           let node = this.store.getPageChangeNode()
@@ -496,10 +497,11 @@ export default {
             }
           }
           if(node){
+            node.isloadMore = true;
             node.page = node.page + 1;
             this.store.load(node, nodeResolve);
           }else{
-             resolve();
+            resolve();
           }
       })
     },
