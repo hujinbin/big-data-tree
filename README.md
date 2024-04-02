@@ -116,6 +116,8 @@ export default {
 | draggable             | 是否开启拖拽节点功能                                   | boolean            | —    | false |
 | allow-drag            | 判断节点能否被拖拽                  | Function(node)  | —  | —  |
 | allow-drop            | 拖拽时判定目标节点能否被放置。`type` 参数有三种情况：'prev'、'inner' 和 'next'，分别表示放置在目标节点前、插入至目标节点和放置在目标节点后 | Function(draggingNode, dropNode, type)  | —    | —     |
+| pageSize              | 跟节点分页页面，只在lazy的情况下生效，需与 load 方法结合使用           | number                     | —    | 1000 |
+
 
 ### props
 | 参数       | 说明                | 类型     | 可选值  | 默认值  |
@@ -124,6 +126,7 @@ export default {
 | children | 指定子树为节点对象的某个属性值 | string | —    | —    |
 | disabled | 指定节点选择框是否禁用为节点对象的某个属性值 | boolean, function(data, node) | —    | —    |
 | isLeaf | 指定节点是否为叶子节点，仅在指定了 lazy 属性的情况下生效 | boolean, function(data, node) | —    | —    |
+| total | 分页场景下该跟节点内子节点的总数，仅在指定了 lazy 属性的情况下生效 | number | —    | —    |
 
 ### 方法
 `Tree` 内部使用了 Node 类型的对象来包装用户传入的数据，用来保存目前节点的状态。
@@ -166,6 +169,8 @@ export default {
 | node-drag-over | 在拖拽节点时触发的事件（类似浏览器的 mouseover 事件） | 共三个参数，依次为：被拖拽节点对应的 Node、当前进入节点对应的 Node、event |
 | node-drag-end  | 拖拽结束时（可能未成功）触发的事件  | 共四个参数，依次为：被拖拽节点对应的 Node、结束拖拽时最后进入的节点（可能为空）、被拖拽节点的放置位置（before、after、inner）、event |
 | node-drop  | 拖拽成功完成时触发的事件  | 共四个参数，依次为：被拖拽节点对应的 Node、结束拖拽时最后进入的节点、被拖拽节点的放置位置（before、after、inner）、event |
+| tree-load-more | 滚动超过分页码一半的高度时的回调方法  | - |
+
 
 ### Scoped Slot
 | name | 说明 |
