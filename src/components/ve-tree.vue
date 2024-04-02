@@ -459,7 +459,7 @@ export default {
       if(scrollNum < 0){
          this.startIndex = endIndex;
       }else if(scrollNum > offset){
-        this.$emit('treeLoadMore') // 整体树的滚动加载事件
+        this.$emit('tree-load-more') // 整体树的滚动加载事件
         this.startIndex = endIndex;
         if(scrollNum > (this.pageSize * 1.5)){
           let page = parseInt(scrollNum / this.pageSize)
