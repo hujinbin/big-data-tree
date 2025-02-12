@@ -2,7 +2,7 @@
 
 ## 介绍
 
-一款基于vue2.x，同时支持少量数据或大量数据、多种功能、虚拟滚动和分页加载的树组件。
+一款基于 vue2.x 开发的树组件，能兼顾少量和大量数据处理。它运用虚拟滚动与分页加载技术，提升加载速度、降低内存占用，有效避免大数据场景下的卡顿，适用于企业数据管理、数据可视化平台等场景。
 
 基于[element-ui](https://element.eleme.cn/#/zh-CN/component/tree)(License:MIT)中抽取的tree样式和功能，结合[vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller)(License:MIT)所做的树组件。
 
@@ -26,7 +26,7 @@ export default {
 
 基础的树形结构展示。
 
-:::demo
+#### demo
 ```html
 <big-data-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></big-data-tree>
 
@@ -83,7 +83,6 @@ export default {
   };
 </script>
 ```
-:::
 
 
 
@@ -176,3 +175,8 @@ export default {
 | name | 说明 |
 |------|--------|
 | — | 自定义树节点的内容，参数为 { node, data } |
+
+
+
+## 变更日志
+每个版本的详细更改都记录在[版本说明](https://github.com/hujinbin/big-data-tree/blob/main/CHANGELOG.md)中。
