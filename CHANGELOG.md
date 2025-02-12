@@ -1,5 +1,5 @@
 ### 更新日志
-<a name="1.4.0"></a>
+<a name="0.0.6"></a>
 ## [0.0.6](https://github.com/hujinbin/big-data-tree/tree/v0.0.6)
 
 * el-tree的基础功能
