@@ -25,7 +25,6 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     'style-loader',
-                    'vue-style-loader',
                     'css-loader',
                 ],
             },
@@ -42,7 +41,6 @@ module.exports = {
                 test: /\.scss$/,
                 use: [
                     'style-loader',
-                    'vue-style-loader',
                     'css-loader',
                     'sass-loader',
                 ],
@@ -51,7 +49,6 @@ module.exports = {
                 test: /\.sass$/,
                 use: [
                     'style-loader',
-                    'vue-style-loader',
                     'css-loader',
                     'sass-loader?indentedSyntax',
                 ],
@@ -66,13 +63,11 @@ module.exports = {
                         // other preprocessors should work out of the box, no loader config like this necessary.
                         'scss': [
                             'style-loader',
-                            'vue-style-loader',
                             'css-loader',
                             'sass-loader',
                         ],
                         'sass': [
                             'style-loader',
-                            'vue-style-loader',
                             'css-loader',
                             'sass-loader?indentedSyntax',
                         ]
